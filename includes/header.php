@@ -46,8 +46,9 @@ define("APPURL", "http://localhost:8080/forum");
                             <?php echo $_SESSION['username'] ?> 
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
+                             <li><a href="<?php echo APPURL; ?>/users/profile.php?name=<?php echo $_SESSION['username'];?>">Public Profile</a></li>
+                            <li><a href="<?php echo APPURL; ?>/users/edit-user.php?id=<?php echo $_SESSION['user_id'];?>">Edit Profile</a></li>
+                            
                             <li><a href="<?php echo APPURL; ?>/auth/logout.php">Logout</a></li>
                            
                         </ul>

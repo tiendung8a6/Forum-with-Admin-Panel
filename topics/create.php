@@ -3,35 +3,42 @@
 
 <?php
 
-	if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
+	header("location: " . APPURL . " ");
+}
+
+if (isset($_POST['submit'])) {
+	if (empty($_POST['title']) or empty($_POST['category']) or empty($_POST['body'])) {
+		echo "<script> alert('one or more inputs are empty');</script>";
+	} else {
+		$title = $_POST['title'];
+		$category = $_POST['category'];
+		$body = $_POST['body'];
+		$user_name = $_SESSION['name'];
+		$user_image = $_SESSION['user_image'];
+
+
+
+
+		$insert = $conn->prepare("INSERT INTO topics (title, category, body, user_name, user_image) VALUES(:title, :category, :body, :user_name, :user_image)");
+
+		$insert->execute([
+			":title" => $title,
+			":category" => $category,
+			":body" => $body,
+			":user_name" => $user_name,
+			":user_image" => $user_image,
+		]);
+
 		header("location: " . APPURL . " ");
 	}
+}
 
-	if (isset($_POST['submit'])) {
-		if (empty($_POST['title']) or empty($_POST['category']) or empty($_POST['body'])) {
-			echo "<script> alert('one or more inputs are empty');</script>";
-		} else {
-			$title = $_POST['title'];
-			$category = $_POST['category'];
-			$body = $_POST['body'];
-			$user_name = $_SESSION['name'];
+//grapping categories
+$categories_select = $conn->query("SELECT * FROM categories ");
+$categories_select->execute();
 
-
-
-
-			$insert = $conn->prepare("INSERT INTO topics (title, category, body, user_name) VALUES(:title, :category, :body, :user_name)");
-
-			$insert->execute([
-				":title" => $title,
-				":category" => $category,
-				":body" => $body,
-				":user_name" => $user_name,
-			]);
-
-			header("location: " . APPURL . " ");
-		}
-	}
-
+$allCats = $categories_select->fetchAll(PDO::FETCH_OBJ);
 
 
 
@@ -63,11 +70,9 @@
 						<div class="form-group">
 							<label>Category</label>
 							<select name="category" class="form-control">
-								<option value="Design">Design</option>
-								<option value="Development">Development</option>
-								<option value="Business & Marketing">Business & Marketing</option>
-								<option value="Search Engines">Search Engines</option>
-								<option value="Cloud & Hosting">Cloud & Hosting</option>
+								<?php foreach ($allCats as $cat) : ?>
+									<option value="<?php echo $cat->name; ?>"><?php echo $cat->name; ?></option>
+								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="form-group">
@@ -83,4 +88,4 @@
 			</div>
 		</div>
 
-<?php require "../includes/footer.php" ?>
+		<?php require "../includes/footer.php" ?>

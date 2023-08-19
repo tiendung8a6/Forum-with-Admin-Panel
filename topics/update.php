@@ -24,7 +24,7 @@
 
 
     if (isset($_POST['submit'])) {
-        if (empty($_POST['title']) or empty($_POST['category']) or empty($_POST['body'])) {
+        if (empty($_POST['title']) OR empty($_POST['category']) OR empty($_POST['body'])) {
             echo "<script> alert('one or more inputs are empty');</script>";
         } else {
             $title = $_POST['title'];
