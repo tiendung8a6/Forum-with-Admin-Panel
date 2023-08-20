@@ -1,8 +1,6 @@
 <?php require "../includes/header.php"; ?>
 <?php require "../config/config.php"; ?>
-
 <?php
-
 if (!isset($_SESSION['username'])) {
 	header("location: " . APPURL . " ");
 }
@@ -17,11 +15,7 @@ if (isset($_POST['submit'])) {
 		$user_name = $_SESSION['name'];
 		$user_image = $_SESSION['user_image'];
 
-
-
-
 		$insert = $conn->prepare("INSERT INTO topics (title, category, body, user_name, user_image) VALUES(:title, :category, :body, :user_name, :user_image)");
-
 		$insert->execute([
 			":title" => $title,
 			":category" => $category,
@@ -29,7 +23,6 @@ if (isset($_POST['submit'])) {
 			":user_name" => $user_name,
 			":user_image" => $user_image,
 		]);
-
 		header("location: " . APPURL . " ");
 	}
 }
@@ -37,20 +30,7 @@ if (isset($_POST['submit'])) {
 //grapping categories
 $categories_select = $conn->query("SELECT * FROM categories ");
 $categories_select->execute();
-
 $allCats = $categories_select->fetchAll(PDO::FETCH_OBJ);
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 
 <div class="container">
@@ -87,5 +67,4 @@ $allCats = $categories_select->fetchAll(PDO::FETCH_OBJ);
 				</div>
 			</div>
 		</div>
-
-		<?php require "../includes/footer.php" ?>
+<?php require "../includes/footer.php" ?>

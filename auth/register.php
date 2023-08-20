@@ -1,8 +1,6 @@
 <?php require "../includes/header.php"; ?>
 <?php require "../config/config.php"; ?>
-
 <?php
-
 if (isset($_SESSION['username'])) {
 	header("location: " . APPURL . " ");
 }
@@ -17,11 +15,9 @@ if (isset($_POST['submit'])) {
 		$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 		$about = $_POST['about'];
 		$avatar = $_FILES['avatar']['name'];
-
 		$dir = "img/" . basename($avatar);
 
 		$insert = $conn->prepare("INSERT INTO users (name, email, username, password, about, avatar) VALUES(:name, :email, :username, :password, :about, :avatar)");
-
 		$insert->execute([
 			":name" => $name,
 			":email" => $email,
@@ -30,26 +26,11 @@ if (isset($_POST['submit'])) {
 			":about" => $about,
 			":avatar" => $avatar,
 		]);
-
-
 		header("location: login.php");
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
-
 
 <div class="container">
 	<div class="row">
@@ -90,4 +71,4 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>
 		</div>
-		<?php require "../includes/footer.php" ?>
+<?php require "../includes/footer.php" ?>

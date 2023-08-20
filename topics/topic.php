@@ -1,34 +1,25 @@
 <?php require "../includes/header.php"; ?>
 <?php require "../config/config.php"; ?>
-
-
-
 <?php
-
 if (isset($_GET['id'])) {
 	$id = $_GET['id'];
-
 	$topic = $conn->query("SELECT * FROM topics WHERE id='$id' ");
 	$topic->execute();
-
 	$singleTopic = $topic->fetch(PDO::FETCH_OBJ);
 
 	//number of post for every user
-
 	$topicCount = $conn->query("SELECT COUNT(*) AS count_topics FROM topics WHERE user_name= '$singleTopic->user_name' ");
 	$topicCount->execute();
-
 	$count = $topicCount->fetch(PDO::FETCH_OBJ);
 
 	//grapping replies in a dynmaic way
 	$reply = $conn->query("SELECT * FROM replies WHERE topic_id='$id' ");
 	$reply->execute();
-
 	$allReplies = $reply->fetchAll(PDO::FETCH_OBJ);
+
 } else {
 	header("location: " . APPURL . "/404.php");
 }
-
 
 if (isset($_POST['submit'])) {
 	if (empty($_POST['reply'])) {
@@ -40,9 +31,6 @@ if (isset($_POST['submit'])) {
 		$topic_id = $id;
 		$user_name = $_SESSION['username'];
 
-
-
-
 		$insert = $conn->prepare("INSERT INTO replies (reply, user_id, user_image, topic_id, user_name) 
 			VALUES(:reply, :user_id, :user_image, :topic_id, :user_name)");
 
@@ -53,22 +41,11 @@ if (isset($_POST['submit'])) {
 			":topic_id" => $topic_id,
 			":user_name" => $user_name,
 		]);
-
 		header("location: " . APPURL . "/topics/topic.php?id=" . $id . " ");
 	}
 }
 
-
-
-
-
-
 ?>
-
-
-
-
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-8">
@@ -87,7 +64,7 @@ if (isset($_POST['submit'])) {
 										<ul>
 											<li><strong><?php echo $singleTopic->user_name; ?></strong></li>
 											<li><?php echo $count->count_topics; ?></li>
-											<li><a href="<?php echo APPURL; ?>/users/profile.php?name=<?php echo $singleTopic->user_name;?>">Profile</a>
+											<li><a href="<?php echo APPURL; ?>/users/profile.php?name=<?php echo $singleTopic->user_name; ?>">Profile</a>
 										</ul>
 									</div>
 								</div>
@@ -102,11 +79,6 @@ if (isset($_POST['submit'])) {
 										<?php endif; ?>
 									<?php endif; ?>
 								</div>
-
-
-
-
-
 							</div>
 						</li>
 						<?php foreach ($allReplies as $reply) :  ?>
@@ -117,7 +89,7 @@ if (isset($_POST['submit'])) {
 											<img class="avatar pull-left" src="../img/<?php echo $reply->user_image; ?>" />
 											<ul>
 												<li><strong><?php echo $reply->user_name; ?></strong></li>
-												<li><a href="<?php echo APPURL; ?>/users/profile.php?name=<?php echo $singleTopic->user_name;?>">Profile</a>
+												<li><a href="<?php echo APPURL; ?>/users/profile.php?name=<?php echo $singleTopic->user_name; ?>">Profile</a>
 											</ul>
 										</div>
 									</div>
@@ -134,7 +106,6 @@ if (isset($_POST['submit'])) {
 									<?php endif; ?>
 								</div>
 							</li>
-
 						<?php endforeach;  ?>
 					</ul>
 					<h3>Reply To Topic</h3>
@@ -150,5 +121,4 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>
 		</div>
-
-		<?php require "../includes/footer.php" ?>
+<?php require "../includes/footer.php" ?>

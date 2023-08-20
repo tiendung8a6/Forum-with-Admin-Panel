@@ -1,9 +1,6 @@
 <?php require "includes/header.php"; ?>
 <?php require "config/config.php"; ?>
-
-
 <?php
-
 $topics = $conn->query("SELECT topics.id AS id, 
 	topics.title AS title, 
 	topics.category AS category, 
@@ -15,7 +12,6 @@ $topics = $conn->query("SELECT topics.id AS id,
 
 $topics->execute();
 $allTopics = $topics->fetchAll(PDO::FETCH_OBJ)
-
 
 ?>
 <div class="container">
@@ -53,4 +49,4 @@ $allTopics = $topics->fetchAll(PDO::FETCH_OBJ)
 				</div>
 			</div>
 		</div>
-		<?php require "includes/footer.php"; ?>
+<?php require "includes/footer.php"; ?>

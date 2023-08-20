@@ -1,8 +1,6 @@
 <?php
-
 session_start();
 define("APPURL", "http://localhost:8080/forum");
-
 ?>
 
 <!DOCTYPE html>
@@ -35,29 +33,23 @@ define("APPURL", "http://localhost:8080/forum");
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="<?php echo APPURL;?>">Home</a></li>
-
-                    <?php if(isset($_SESSION['username'])) :  ?>
-
-
-                    <li><a href="<?php echo APPURL; ?>/topics/create.php">Create Topic</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <?php echo $_SESSION['username'] ?> 
-                        <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                             <li><a href="<?php echo APPURL; ?>/users/profile.php?name=<?php echo $_SESSION['username'];?>">Public Profile</a></li>
-                            <li><a href="<?php echo APPURL; ?>/users/edit-user.php?id=<?php echo $_SESSION['user_id'];?>">Edit Profile</a></li>
-                            
-                            <li><a href="<?php echo APPURL; ?>/auth/logout.php">Logout</a></li>
-                           
-                        </ul>
-                    </li>
+                    <li class="active"><a href="<?php echo APPURL; ?>">Home</a></li>
+                    <?php if (isset($_SESSION['username'])) :  ?>
+                        <li><a href="<?php echo APPURL; ?>/topics/create.php">Create Topic</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <?php echo $_SESSION['username'] ?>
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo APPURL; ?>/users/profile.php?name=<?php echo $_SESSION['username']; ?>">Public Profile</a></li>
+                                <li><a href="<?php echo APPURL; ?>/users/edit-user.php?id=<?php echo $_SESSION['user_id']; ?>">Edit Profile</a></li>
+                                <li><a href="<?php echo APPURL; ?>/auth/logout.php">Logout</a></li>
+                            </ul>
+                        </li>
                     <?php else : ?>
-                    <li><a href="<?php echo APPURL; ?>/auth/register.php">Register</a></li>
-                    <li><a href="<?php echo APPURL; ?>/auth/login.php">login</a></li>
-                    <?php endif ; ?>
-
+                        <li><a href="<?php echo APPURL; ?>/auth/register.php">Register</a></li>
+                        <li><a href="<?php echo APPURL; ?>/auth/login.php">login</a></li>
+                    <?php endif; ?>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

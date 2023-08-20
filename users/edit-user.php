@@ -1,60 +1,35 @@
 <?php require "../includes/header.php"; ?>
 <?php require "../config/config.php"; ?>
-
 <?php
+if (!isset($_SESSION['username'])) {
+	header("location: " . APPURL . " ");
+}
+//grapping the data
+if (isset($_GET['id'])) {
+	$id = $_GET['id'];
+	$select = $conn->query("SELECT * FROM users WHERE id='$id' ");
+	$select->execute();
+	$user = $select->fetch(PDO::FETCH_OBJ);
 
-    if (!isset($_SESSION['username'])) {
-        header("location: " . APPURL . " ");
-    }
+	if ($user->id !== $_SESSION['user_id']) {
+		header("location: " . APPURL . " ");
+	}
+}
 
-    //grapping the data
-    if (isset($_GET['id'])) {    
-        $id = $_GET['id'];
-
-        $select = $conn->query("SELECT * FROM users WHERE id='$id' ");
-        $select->execute();
-    
-        $user = $select->fetch(PDO::FETCH_OBJ);
-
-		if($user->id !== $_SESSION['user_id']){
-			header("location: " . APPURL . " ");
-		}
-    }
-
-
-
-    if (isset($_POST['submit'])) {
-        if (empty($_POST['email']) OR empty($_POST['about'])) {
-            echo "<script> alert('one or more inputs are empty');</script>";
-        } else {
-            $email = $_POST['email'];
-            $about = $_POST['about'];
-
-
-            $update = $conn->prepare("UPDATE users SET email = :email, about = :about WHERE id='$id'");
-
-            $update->execute([
-                ":email" => $email,
-                ":about" => $about,
-
-            ]);
-
-            header("location: " . APPURL . " ");
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
+if (isset($_POST['submit'])) {
+	if (empty($_POST['email']) or empty($_POST['about'])) {
+		echo "<script> alert('one or more inputs are empty');</script>";
+	} else {
+		$email = $_POST['email'];
+		$about = $_POST['about'];
+		$update = $conn->prepare("UPDATE users SET email = :email, about = :about WHERE id='$id'");
+		$update->execute([
+			":email" => $email,
+			":about" => $about,
+		]);
+		header("location: " . APPURL . " ");
+	}
+}
 ?>
 
 <div class="container">
@@ -83,5 +58,4 @@
 				</div>
 			</div>
 		</div>
-
 <?php require "../includes/footer.php" ?>
