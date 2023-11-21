@@ -34,7 +34,7 @@ This project showcases the creation of a dynamic forum platform, complete with a
 
 - **PDO** (PHP Data Objects): PDO is a database access abstraction layer in PHP that provides a consistent interface for interacting with databases. It ensures secure and efficient database communication, protecting against SQL injection and other vulnerabilities.
 
-## Author
+## Contact
 - **Name**: Ngo Tien Dung
-- **Contact**: tiendung8a6@gmail.com
+- **Mail**: tiendung8a6@gmail.com
 - **Phone**: +84 985872885
